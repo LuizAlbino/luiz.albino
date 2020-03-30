@@ -1,0 +1,25 @@
+//Project 3 Paulo Vitor Farias RA: 223189 and Luiz Henrique Albino RA:202419   
+clc
+clear
+close
+
+
+coef = zeros(14,14)
+unk = zeros(14,1)
+it = zeros(14,1)
+
+n1 =  input('Inform the flow rate stream of [1] in kg/h: ')
+wt1 = input('Inform the composition (wt%) of stream [1] as a vector in the following order, [WATER, SALT AND CELLULOSE]: ')
+n14 = input('Inform the percentage(%) of water in stream [3] that is removed on stream [4]: ')
+r46 = input('Inform the mass of glue (in kg) in stream [6] per mass (kg) of water in stream [5]: ')
+c48 = input('Inform concentration (wt%) of glue in stream [8]: ')
+wt1 = [wt1,0]//Adding glue matrix
+for i = 1:4
+    m1(i) = n1*(wt1(i)/100) //Calculating each component on stream [1]
+end
+//Not zero coeficients on coef
+coef(1,1) = 1,  coef(1,4) = m1(1), coef(2,2) = 1
+coef(2,4) = m1(2), coef(3,3) =1 , coef(3,4) = m1(3), coef(4,4)= (1-n14)*m1(1), coef(4,5) = -1, coef(5,4) = m1(2), coef(5,6) = -1, coef(6,4) = m1(3), coef(6,7) = -1, coef(7,5) = 1, coef(7,8) = -1, coef(8,6) = 1, coef(8,9) = -1, coef(9,7) = 1,coef(9,10) = -1, coef(10,5) = r46, coef(10,11) = -1, coef(11,1) = 1, coef(11,8) = 1, coef(12,2) = 1,coef(12,9) = 1, coef(12,13) = -1, coef(13,3) = 1, coef(13,10) = 1, coef(13,14) = -1, coef(14,1) = -c48, coef(14,2) = -c48, coef(14,3) = -c48, coef(14,8) = -c48, coef(14,9) = -c48, coef(14,10) = -c48, coef(14,11) = 1-c48
+//Not zero coeficients on it
+it(1,1) = m1(1), it(2,1) = m1(2), it(3,1) = m1(3)
+unk = inv(coef)*it
